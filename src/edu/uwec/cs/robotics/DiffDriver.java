@@ -29,12 +29,11 @@ public class DiffDriver {
 	public void forward(int distance, int speed) {
 		left.setSpeed(speed);
 		right.setSpeed(speed);
-		left.synchronizeWith(new RegulatedMotor[] {right});
 
-		left.startSynchronization();
 		left.rotate( (int)((360 * distance) / (Math.PI * wheelDiam)), true);
 		right.rotate( (int)((360 * distance) / (Math.PI * wheelDiam)), true);
-		left.endSynchronization();
+		left.waitComplete();
+		right.waitComplete();
 	}
 	
 	// Make a sweeping turn around a pivot point
