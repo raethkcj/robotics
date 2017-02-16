@@ -30,8 +30,10 @@ public class DiffDriver {
 		left.setSpeed(speed);
 		right.setSpeed(speed);
 
-		left.rotate( (int)((360 * distance) / (Math.PI * wheelDiam)), true);
-		right.rotate( (int)((360 * distance) / (Math.PI * wheelDiam)), true);
+		int degrees = (int) ((360 * distance) / (Math.PI * wheelDiam)) * Integer.signum(speed);
+
+		left.rotate(degrees, true);
+		right.rotate(degrees, true);
 		left.waitComplete();
 		right.waitComplete();
 	}
