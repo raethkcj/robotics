@@ -41,10 +41,41 @@ public class DiffDriver {
 	// angle: degrees (positive)
 	// speed: degrees/second 
 	public void turn(int radius, int angle, Boolean leftTurn, int speed) {
+		int degrees = (int) ((2 * angle * (radius == 0 ? (wheelBase / 2.0) : radius)) / wheelDiam) * (Integer.signum(speed));
+		double ratioInner = (radius - wheelBase / 2.0) / (radius == 0 ? (wheelBase / 2.0) : radius);
+		double ratioOuter = (radius + wheelBase / 2.0) / (radius == 0 ? (wheelBase / 2.0) : radius);
+
+		int degreesInner = (int) (ratioInner * degrees);
+		int degreesOuter = (int) (ratioOuter * degrees);
+
+		int speedInner = (int) (ratioInner * speed);
+		int speedOuter = (int) (ratioOuter * speed);
+
+		if(leftTurn) {
+			left.setSpeed(speedInner);
+			right.setSpeed(speedOuter);
+			left.rotate(degreesInner, true);
+			right.rotate(degreesOuter, true);
+		} else {
+			right.setSpeed(speedInner);
+			left.setSpeed(speedOuter);
+			right.rotate(degreesInner, true);
+			left.rotate(degreesOuter, true);
+		}
+
+		left.waitComplete();
+		right.waitComplete();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-		DiffDriver d = new DiffDriver(150, 56);
-		d.forward(100, 500);
+		DiffDriver d = new DiffDriver(121, 56);
+		d.forward(1000, 500);
+		d.turn(0, 90, true, 500);
+		d.forward(1000, 500);
+		d.turn(0, 90, true, 500);
+		d.forward(1000, 500);
+		d.turn(0, 90, true, 500);
+		d.forward(1000, 500);
+		d.turn(0, 90, true, 500);
 	}
 }
