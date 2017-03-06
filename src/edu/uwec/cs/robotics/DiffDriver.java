@@ -2,7 +2,6 @@ package edu.uwec.cs.robotics;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
-import lejos.robotics.RegulatedMotor;
 
 public class DiffDriver {
 	// Both in mm
@@ -12,15 +11,11 @@ public class DiffDriver {
 	private EV3LargeRegulatedMotor left;
 	private EV3LargeRegulatedMotor right;
 	
-	private final int ACCELERATION = 500;
-	
 	public DiffDriver(int wheelBase, int wheelDiam) {
 		this.wheelBase = wheelBase;
 		this.wheelDiam = wheelDiam;
 		left = new EV3LargeRegulatedMotor(MotorPort.B);
 		right = new EV3LargeRegulatedMotor(MotorPort.C);
-		left.setAcceleration(ACCELERATION);
-		right.setAcceleration(ACCELERATION);
 	}
 	
 	// Drive in a straight line
@@ -39,7 +34,7 @@ public class DiffDriver {
 	}
 	
 	// Make a sweeping turn around a pivot point
-	// radius: mm (>= 0, but possibly less than wheelBase)
+	// radius: mm (>= 0, but possibly less than wheelBase / 2)
 	// angle: degrees (positive)
 	// speed: degrees/second 
 	public void turn(int radius, int angle, Boolean leftTurn, int speed) {
@@ -70,14 +65,17 @@ public class DiffDriver {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+		// Original measured wheelbase = 121mm
+		// Ran calibration with 126
 		DiffDriver d = new DiffDriver(121, 56);
-		d.forward(1000, 500);
-		d.turn(0, 90, true, 500);
-		d.forward(1000, 500);
-		d.turn(0, 90, true, 500);
-		d.forward(1000, 500);
-		d.turn(0, 90, true, 500);
-		d.forward(1000, 500);
-		d.turn(0, 90, true, 500);
+		d.forward(500, 300);
+		d.turn(0, 90, false, 300);
+		d.turn(500, 180, true, 300);
+		d.turn(500, 180, false, 300);
+		d.turn(0, 180, true, 300);
+		d.turn(500, 180, true, 300);
+		d.turn(500, 180, false, 300);
+		d.turn(0, 90, true, 300);
+		d.forward(500, 300);
 	}
 }
