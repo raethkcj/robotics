@@ -24,8 +24,8 @@ public class TurnLeft implements Behavior {
 
 	@Override
 	public void action() {
-		WallFollower.pilot.arc(100, 105);
-		WallFollower.pilot.travel(100);
+		WallFollower.pilot.arc(100, 95);
+		WallFollower.pilot.travel(250);
 	}
 
 	@Override
