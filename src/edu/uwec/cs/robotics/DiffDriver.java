@@ -18,9 +18,11 @@ public class DiffDriver {
 		right = new EV3LargeRegulatedMotor(MotorPort.C);
 	}
 	
-	// Drive in a straight line
-	// distance: mm
-	// speed: degrees/second
+	/**
+	 * Drive in a straight line
+	 * @param distance in mm
+	 * @param speed in degrees/second
+	 */
 	public void forward(int distance, int speed) {
 		left.setSpeed(speed);
 		right.setSpeed(speed);
@@ -33,10 +35,13 @@ public class DiffDriver {
 		right.waitComplete();
 	}
 	
-	// Make a sweeping turn around a pivot point
-	// radius: mm (>= 0, but possibly less than wheelBase / 2)
-	// angle: degrees (positive)
-	// speed: degrees/second 
+	/**
+	 * Make a sweeping turn around a pivot point
+	 * @param radius in mm (>= 0, but possibly less than half the wheelBase)
+	 * @param angle in degrees (positive)
+	 * @param leftTurn
+	 * @param speed in degrees/second
+	 */
 	public void turn(int radius, int angle, Boolean leftTurn, int speed) {
 		int degrees = (int) ((2 * angle * (radius == 0 ? (wheelBase / 2.0) : radius)) / wheelDiam) * (Integer.signum(speed));
 		double ratioInner = (radius - wheelBase / 2.0) / (radius == 0 ? (wheelBase / 2.0) : radius);
