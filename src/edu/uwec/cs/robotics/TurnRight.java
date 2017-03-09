@@ -7,8 +7,13 @@ import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;
 
 public class TurnRight implements Behavior {
-	private SensorModes sensor = new EV3TouchSensor(SensorPort.S2);
-	private SampleProvider touch = sensor.getMode("Touch");
+	private SensorModes sensor;
+	private SampleProvider touch;
+
+	public TurnRight() {
+		sensor = new EV3TouchSensor(SensorPort.S2);
+		touch = sensor.getMode("Touch");
+	}
 
 	@Override
 	public boolean takeControl() {
@@ -20,15 +25,14 @@ public class TurnRight implements Behavior {
 	@Override
 	public void action() {
 		// Back up (to avoid turning into the wall)
-		WallFollower.driver.forward(-200, 300);
+		WallFollower.pilot.travel(-150);
 		// Turn right
-		WallFollower.driver.turn(0, 90, false, 300);
+		WallFollower.pilot.rotate(-105);
 	}
 
 	@Override
 	public void suppress() {
-		// TODO Auto-generated method stub
-
+		WallFollower.pilot.stop();
 	}
 
 }

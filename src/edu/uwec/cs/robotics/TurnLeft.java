@@ -1,25 +1,36 @@
 package edu.uwec.cs.robotics;
 
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.sensor.SensorModes;
+import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;
 
 public class TurnLeft implements Behavior {
+	private SensorModes sensor;
+	private SampleProvider distance;
+
+	public TurnLeft() {
+		sensor = new EV3UltrasonicSensor(SensorPort.S1);
+		distance = sensor.getMode("Distance");
+	}
 
 	@Override
 	public boolean takeControl() {
-		// TODO Auto-generated method stub
-		return false;
+		float[] sample = new float[distance.sampleSize()];
+		distance.fetchSample(sample, 0);
+		return sample[0] > 0.2286f;
 	}
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
-
+		WallFollower.pilot.arc(100, 105);
+		WallFollower.pilot.travel(100);
 	}
 
 	@Override
 	public void suppress() {
-		// TODO Auto-generated method stub
-
+		WallFollower.pilot.stop();
 	}
 
 }
