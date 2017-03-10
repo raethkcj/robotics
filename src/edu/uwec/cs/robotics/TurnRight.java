@@ -25,7 +25,7 @@ public class TurnRight implements Behavior {
 	@Override
 	public void action() {
 		// Back up (to avoid turning into the wall)
-		WallFollower.pilot.travel(-150);
+		WallFollower.pilot.travel(-160);
 		// Turn right
 		WallFollower.pilot.rotate(-90);
 	}
