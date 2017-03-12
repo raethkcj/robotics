@@ -10,8 +10,8 @@ public class TurnLeft implements Behavior {
 
 	@Override
 	public boolean takeControl() {
-		float[] sample = new float[WallFollower.distance.sampleSize()];
-		WallFollower.distance.fetchSample(sample, 0);
+		float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
+		WallFollower.distanceProvider.fetchSample(sample, 0);
 		return sample[0] > WallFollower.MAX_THRESHOLD;
 	}
 
@@ -19,6 +19,9 @@ public class TurnLeft implements Behavior {
 	public void action() {
 		WallFollower.pilot.arc(100, 95);
 		WallFollower.pilot.travel(250);
+		//float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
+		//WallFollower.distanceProvider.fetchSample(sample, 0);
+		//WallFollower.lastDistance = sample[0];
 	}
 
 	@Override

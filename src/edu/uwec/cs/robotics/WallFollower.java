@@ -17,16 +17,21 @@ import lejos.robotics.subsumption.Behavior;
 
 public class WallFollower {
 	public static MovePilot pilot;
-	public static SensorModes sensor;
-	public static SampleProvider distance;
+	public static SensorModes ultrasonicSensor;
+	public static SampleProvider distanceProvider;
+	
+	public static float lastDistance;
 	
 	public static final float INNER_THRESHOLD = 0.150f;
 	public static final float OUTER_THRESHOLD = 0.200f;
 	public static final float MAX_THRESHOLD = 0.250f;
 
 	private static void setupSensors() {
-		sensor = new EV3UltrasonicSensor(SensorPort.S1);
-		distance = sensor.getMode("Distance");
+		ultrasonicSensor = new EV3UltrasonicSensor(SensorPort.S1);
+		distanceProvider = ultrasonicSensor.getMode("Distance");
+		float[] sample = new float[distanceProvider.sampleSize()];
+		distanceProvider.fetchSample(sample, 0);
+		lastDistance = sample[0];
 	}
 
 	private static void setupPilot(double wheelBase, double wheelDiameter) {

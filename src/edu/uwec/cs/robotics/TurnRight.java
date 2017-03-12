@@ -28,6 +28,9 @@ public class TurnRight implements Behavior {
 		WallFollower.pilot.travel(-160);
 		// Turn right
 		WallFollower.pilot.rotate(-90);
+		//float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
+		//WallFollower.distanceProvider.fetchSample(sample, 0);
+		//WallFollower.lastDistance = sample[0];
 	}
 
 	@Override
