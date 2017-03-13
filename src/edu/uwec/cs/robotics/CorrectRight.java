@@ -8,9 +8,7 @@ public class CorrectRight implements Behavior {
 	public boolean takeControl() {
 		float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
 		WallFollower.distanceProvider.fetchSample(sample, 0);
-		float lastD = WallFollower.lastDistance;
-		//WallFollower.lastDistance = sample[0];
-		return sample[0] < lastD;// && .001 >= Math.abs(sample[0] - WallFollower.lastDistance);
+		return sample[0] < WallFollower.lastDistance && WallFollower.lastDistance - sample[0] > .005;
 	}
 
 	@Override
@@ -19,14 +17,13 @@ public class CorrectRight implements Behavior {
 		WallFollower.distanceProvider.fetchSample(sample, 0);
 		float lastD = WallFollower.lastDistance;
 		
+		// Try it once, continue while getting closer to parallel
 		do {
 			WallFollower.pilot.rotate(-5.0);
 			lastD = sample[0];
 			WallFollower.distanceProvider.fetchSample(sample, 0);
-		} while (sample[0] <= lastD);
+		} while (sample[0] < lastD);
 		WallFollower.lastDistance = lastD;
-		//WallFollower.pilot.rotate(-5.0);
-		//WallFollower.pilot.travel(5);
 	}
 
 	@Override
