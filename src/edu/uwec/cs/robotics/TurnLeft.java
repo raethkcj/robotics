@@ -6,15 +6,16 @@ public class TurnLeft implements Behavior {
 
 	@Override
 	public boolean takeControl() {
-		float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
-		WallFollower.distanceProvider.fetchSample(sample, 0);
-		return sample[0] > WallFollower.MAX_THRESHOLD;
+		float[] sample = new float[Robot.distanceProvider.sampleSize()];
+		Robot.distanceProvider.fetchSample(sample, 0);
+	//	return sample[0] > Robot.MAX_THRESHOLD;
+		return false;
 	}
 
 	@Override
 	public void action() {
-		WallFollower.pilot.arc(100, 95);
-		WallFollower.pilot.travel(250);
+		Robot.pilot.arc(100, 95);
+		Robot.pilot.travel(250);
 		//float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
 		//WallFollower.distanceProvider.fetchSample(sample, 0);
 		//WallFollower.lastDistance = sample[0];
@@ -22,7 +23,7 @@ public class TurnLeft implements Behavior {
 
 	@Override
 	public void suppress() {
-		WallFollower.pilot.stop();
+		Robot.pilot.stop();
 	}
 
 }

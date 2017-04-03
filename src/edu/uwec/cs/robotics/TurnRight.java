@@ -25,9 +25,9 @@ public class TurnRight implements Behavior {
 	@Override
 	public void action() {
 		// Back up (to avoid turning into the wall)
-		WallFollower.pilot.travel(-160);
+		Robot.pilot.travel(-160);
 		// Turn right
-		WallFollower.pilot.rotate(-90);
+		Robot.pilot.rotate(-90);
 		//float[] sample = new float[WallFollower.distanceProvider.sampleSize()];
 		//WallFollower.distanceProvider.fetchSample(sample, 0);
 		//WallFollower.lastDistance = sample[0];
@@ -35,7 +35,7 @@ public class TurnRight implements Behavior {
 
 	@Override
 	public void suppress() {
-		WallFollower.pilot.stop();
+		Robot.pilot.stop();
 	}
 
 }

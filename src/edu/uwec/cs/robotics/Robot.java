@@ -1,5 +1,8 @@
 package edu.uwec.cs.robotics;
 
+import java.awt.Point;
+import java.util.Arrays;
+
 import lejos.hardware.Button;
 import lejos.hardware.Key;
 import lejos.hardware.KeyListener;
@@ -15,10 +18,21 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 
-public class WallFollower {
+public class Robot {
 	public static MovePilot pilot;
 	public static SensorModes ultrasonicSensor;
 	public static SampleProvider distanceProvider;
+	public static Motor motor;
+	public static int[][] map;
+	public static Point goal = new Point(6,8);
+	public static float floorTilesHeight = 12 * 2.54f / 100; // 12 inches to meters
+	public static float floorTilesWidth = 12 * 2.54f / 100;
+	public static int nFloorTilesX = 9;
+	public static int nFloorTilesY = 7;
+	public static float myTilesHeight = Robot.floorTilesHeight/2f;
+	public static float myTilesWidth = Robot.floorTilesWidth/2f;
+	
+	public static boolean moving = false;
 	
 	public static float lastDistance;
 	
@@ -41,6 +55,7 @@ public class WallFollower {
 		pilot = new MovePilot(chassis);
 		pilot.setLinearSpeed(pilot.getLinearSpeed() / 2);
 		pilot.setAngularSpeed(pilot.getAngularSpeed() / 2);
+		Robot.map = new int[nFloorTilesX][nFloorTilesY];
 	}
 
 	public static void main(String[] args) {
@@ -58,8 +73,17 @@ public class WallFollower {
 
 		setupPilot(121, 56);
 		setupSensors();
-		Behavior[] behaviors = { new Follow(), new CorrectLeft(), new CorrectRight(), new TurnLeft(), new TurnRight() };
+		initMap();
+		Behavior[] behaviors = { new Follow() };
 		Arbitrator arbitrator = new Arbitrator(behaviors);
 		arbitrator.go();
+	}
+	
+	
+	public static void initMap() {
+		for(int[] row : map) {
+			Arrays.fill(row, 0);
+		}
+		map[goal.y][goal.x] = 2;
 	}
 }
