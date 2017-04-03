@@ -1,13 +1,10 @@
 package edu.uwec.cs.robotics;
 
-import lejos.hardware.motor.EV3MediumRegulatedMotor;
-import lejos.hardware.port.MotorPort;
 import lejos.robotics.subsumption.Behavior;
 
 public class Follow implements Behavior {
-	public static EV3MediumRegulatedMotor motor = new EV3MediumRegulatedMotor(MotorPort.A);
 
-	public static int turnAngle = 90; // positive -> ccw
+	public static int turnAngle = -90;
 	public static int direction = 0; // 0, 1, 2, 3 -> right, up, left, down
 	public static float myTilesHeight = Robot.floorTilesHeight/2f;
 	public static float myTilesWidth = Robot.floorTilesWidth/2f;
@@ -41,18 +38,21 @@ public class Follow implements Behavior {
 		float[] sample = new float[Robot.distanceProvider.sampleSize()];
 		Robot.distanceProvider.fetchSample(sample, 0);
 		samples[0] = sample[0];
-		motor.rotate(turnAngle);
+		System.out.println("SCAN0: " + sample[0]);
+		Robot.motor.A.rotate(turnAngle);
 		Robot.distanceProvider.fetchSample(sample, 0);
 		samples[1] = sample[0];
-		motor.rotate(turnAngle);
+		System.out.println("SCAN1: " + sample[0]);
+		Robot.motor.A.rotate(turnAngle);
 		Robot.distanceProvider.fetchSample(sample, 0);
 		samples[2] = sample[0];
+		System.out.println("SCAN2: " + sample[0]);
 		return samples;
 	}
 
 	@Override
 	public void action() {
-		updateSamples(scan());
+		scan();
 		Robot.pilot.travel(152);
 		float[] sample = new float[Robot.distanceProvider.sampleSize()];
 		Robot.distanceProvider.fetchSample(sample, 0);

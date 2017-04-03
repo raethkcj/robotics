@@ -74,7 +74,7 @@ public class Robot {
 		setupPilot(121, 56);
 		setupSensors();
 		initMap();
-		Behavior[] behaviors = { new Follow() };
+		Behavior[] behaviors = { new Follow(), new TurnRight(), new RotateLeft(), new RotateRight() };
 		Arbitrator arbitrator = new Arbitrator(behaviors);
 		arbitrator.go();
 	}
