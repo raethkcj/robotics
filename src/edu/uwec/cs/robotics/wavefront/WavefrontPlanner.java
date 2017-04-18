@@ -1,4 +1,4 @@
-package edu.uwec.cs.robotics;
+package edu.uwec.cs.robotics.wavefront;
 
 import java.awt.Point;
 import java.util.Arrays;

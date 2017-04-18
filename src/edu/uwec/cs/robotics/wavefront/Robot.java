@@ -1,4 +1,4 @@
-package edu.uwec.cs.robotics;
+package edu.uwec.cs.robotics.wavefront;
 
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
