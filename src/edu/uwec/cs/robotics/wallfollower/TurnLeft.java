@@ -1,9 +1,5 @@
 package edu.uwec.cs.robotics.wallfollower;
 
-import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
-import lejos.hardware.sensor.SensorModes;
-import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;
 
 public class TurnLeft implements Behavior {
