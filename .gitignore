@@ -1,5 +1,6 @@
 .metadata
 .settings
+.idea
 bin/
 *.jar
 
