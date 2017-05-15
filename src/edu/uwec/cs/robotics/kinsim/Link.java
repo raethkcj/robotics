@@ -64,4 +64,9 @@ public class Link {
 		// The -3s are to center the oval on the (x,y)
 		g.fillOval((int)jointPoint.getX()-3, (int)jointPoint.getY()-3, 6, 6);
 	}
+	
+	@Override
+	public String toString() {
+		return "Length: " + length + ", Angle: " + jointValue;
+	}
 }

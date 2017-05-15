@@ -67,6 +67,7 @@ public class KinSim {
 			sliders.add(addSlider(sliderPanel, r, rp, i));
 		}
 		
+		f.setLocationRelativeTo(null);
 		f.setVisible(true);
 	}
 	
@@ -106,7 +107,7 @@ public class KinSim {
 		}
 		sliders.get(sliderNumber).setValue((int)value);
 	}
-	
+
 	public static void main(String[] args) {
 		new KinSim();
 	}
