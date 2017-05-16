@@ -64,7 +64,7 @@ public class Robot {
 	
 	// Should be coded using gradient following
 	// The following link for inverse kin gradient following is useful:
-	// http://freespace.virgin.net/hugo.elias/models/m_ik2.htm
+	// https://web-beta.archive.org/web/20160531030510id_/http://freespace.virgin.net/hugo.elias/models/m_ik2.htm
 	//
 	// Remember that the call to this method is threaded so you can
 	// repaint the robotPanel and update the kinsim GUI's sliders as you
@@ -74,9 +74,9 @@ public class Robot {
 	public void inverseKin(Point2D goal) {
 		double dist = calculateDistance(getLinkAngles(), goal);
 		
-		ArrayList<Double> oldGradients = new ArrayList<Double>(Collections.nCopies(links.size(), 0.0));
-		double maxGradient = Double.MAX_VALUE;
-		do {
+		double maxSpeed = Double.MAX_VALUE;
+		while(dist > 3 && maxSpeed > 0.5) {
+			ArrayList<Double> oldGradients = new ArrayList<Double>(Collections.nCopies(links.size(), 0.0));
 			ArrayList<Double> speeds = new ArrayList<Double>(Collections.nCopies(links.size(), 0.0));
 			for(int i = 1; i < links.size(); i++) {
 				List<Double> angles = getLinkAngles();
@@ -109,12 +109,12 @@ public class Robot {
 			}
 			
 			dist = calculateDistance(getLinkAngles(), goal);
-			maxGradient = oldGradients.stream().map((g) -> Math.abs(g)).max(Double::compare).get();
+			maxSpeed = speeds.stream().map((s) -> Math.abs(s)).max(Double::compare).get();
 
 			try {
 				Thread.sleep(5);
 			} catch(InterruptedException e) {}
-		} while(dist > 3 && maxGradient > 0.5);
+		}
 	}
 	
 
