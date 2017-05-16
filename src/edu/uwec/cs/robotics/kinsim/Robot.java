@@ -109,7 +109,7 @@ public class Robot {
 			}
 			
 			dist = calculateDistance(getLinkAngles(), goal);
-			maxSpeed = speeds.stream().map((s) -> Math.abs(s)).max(Double::compare).get();
+			maxSpeed = speeds.stream().map(Math::abs).max(Double::compare).get();
 
 			try {
 				Thread.sleep(5);
